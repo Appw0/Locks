@@ -1,0 +1,17 @@
+{
+  "type": "locks:locking_item_cloning",
+  "locking":
+  {
+    "item": "locks:wood_lock"
+  },
+  "blanks":
+  [
+    {
+      "item": "locks:wood_lock"
+    }
+  ],
+  "result":
+  {
+    "item": "locks:wood_lock"
+  }
+}

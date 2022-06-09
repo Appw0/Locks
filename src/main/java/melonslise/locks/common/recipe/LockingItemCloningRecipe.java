@@ -8,6 +8,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
+import melonslise.locks.Locks;
 import melonslise.locks.common.item.LockingItem;
 import melonslise.locks.common.util.LocksUtil;
 import net.minecraft.inventory.InventoryCrafting;
@@ -55,7 +56,7 @@ public class LockingItemCloningRecipe extends IForgeRegistryEntry.Impl<IRecipe> 
 			ItemStack stack = inv.getStackInSlot(a);
 			if(stack.isEmpty())
 				continue;
-			if(LocksUtil.hasKey(stack, LockingItem.KEY_ID) && this.locking.test(stack))
+			if(locking.isEmpty() && LocksUtil.hasKey(stack, LockingItem.KEY_ID) && this.locking.test(stack))
 				locking = stack;
 			else
 				blanks.add(stack);
@@ -71,8 +72,10 @@ public class LockingItemCloningRecipe extends IForgeRegistryEntry.Impl<IRecipe> 
 		for(int a = 0; a < inv.getSizeInventory(); ++a)
 		{
 			ItemStack stack = inv.getStackInSlot(a);
-			if(this.locking.test(stack))
+			if(this.locking.test(stack)) {
 				stacks.set(a, stack.copy());
+				break;
+			}
 		}
 		return stacks;
 	}

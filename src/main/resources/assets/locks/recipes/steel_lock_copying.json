@@ -1,0 +1,17 @@
+{
+  "type": "locks:locking_item_cloning",
+  "locking":
+  {
+    "item": "locks:steel_lock"
+  },
+  "blanks":
+  [
+    {
+      "item": "locks:steel_lock"
+    }
+  ],
+  "result":
+  {
+    "item": "locks:steel_lock"
+  }
+}

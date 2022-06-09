@@ -1,0 +1,17 @@
+{
+  "type": "locks:locking_item_cloning",
+  "locking":
+  {
+    "item": "locks:gold_lock"
+  },
+  "blanks":
+  [
+    {
+      "item": "locks:gold_lock"
+    }
+  ],
+  "result":
+  {
+    "item": "locks:gold_lock"
+  }
+}

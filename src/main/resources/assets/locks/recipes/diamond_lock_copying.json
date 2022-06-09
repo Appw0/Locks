@@ -1,0 +1,17 @@
+{
+  "type": "locks:locking_item_cloning",
+  "locking":
+  {
+    "item": "locks:diamond_lock"
+  },
+  "blanks":
+  [
+    {
+      "item": "locks:diamond_lock"
+    }
+  ],
+  "result":
+  {
+    "item": "locks:diamond_lock"
+  }
+}
