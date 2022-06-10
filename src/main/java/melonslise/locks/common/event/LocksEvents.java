@@ -9,11 +9,7 @@ import melonslise.locks.Locks;
 import melonslise.locks.common.capability.ILockableHandler;
 import melonslise.locks.common.capability.ISelection;
 import melonslise.locks.common.config.LocksConfig;
-import melonslise.locks.common.init.LocksCapabilities;
-import melonslise.locks.common.init.LocksEnchantments;
-import melonslise.locks.common.init.LocksItems;
-import melonslise.locks.common.init.LocksNetworks;
-import melonslise.locks.common.init.LocksSoundEvents;
+import melonslise.locks.common.init.*;
 import melonslise.locks.common.item.KeyItem;
 import melonslise.locks.common.item.KeyRingItem;
 import melonslise.locks.common.item.LockItem;
@@ -34,6 +30,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
@@ -63,6 +60,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
+import net.minecraftforge.oredict.OreDictionary;
 
 @Mod.EventBusSubscriber(modid = Locks.ID)
 public final class LocksEvents
@@ -85,6 +83,11 @@ public final class LocksEvents
 	public static void registerSoundEvents(RegistryEvent.Register<SoundEvent> event)
 	{
 		LocksSoundEvents.register(event);
+	}
+
+	@SubscribeEvent
+	public static void registerRecipes(RegistryEvent.Register<IRecipe> event) {
+		LocksRecipes.register(event);
 	}
 
 	@SubscribeEvent

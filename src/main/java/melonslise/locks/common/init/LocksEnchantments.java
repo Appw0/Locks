@@ -5,12 +5,12 @@ import java.util.List;
 
 import melonslise.locks.Locks;
 import melonslise.locks.common.enchantment.ComplexityEnchantment;
+import melonslise.locks.common.enchantment.DisappearingEnchantment;
 import melonslise.locks.common.enchantment.ShockingEnchantment;
 import melonslise.locks.common.enchantment.SturdyEnchantment;
 import melonslise.locks.common.item.LockItem;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnumEnchantmentType;
-import net.minecraft.item.Item;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.event.RegistryEvent;
 
@@ -18,12 +18,13 @@ public class LocksEnchantments
 {
 	public static final EnumEnchantmentType LOCK_TYPE = EnumHelper.addEnchantmentType("LOCK", item -> item instanceof LockItem); // FIXME check if is in tag instead?
 	
-	public static final List<Enchantment> ENCHANTMENTS = new ArrayList<Enchantment>(3);
+	public static final List<Enchantment> ENCHANTMENTS = new ArrayList<Enchantment>(4);
 	
 	public static final Enchantment
 		SHOCKING = add("shocking", new ShockingEnchantment()),
 		STURDY = add("sturdy", new SturdyEnchantment()),
-		COMPLEXITY = add("complexity", new ComplexityEnchantment());
+		COMPLEXITY = add("complexity", new ComplexityEnchantment()),
+		DISAPPEARING = add("disappearing", new DisappearingEnchantment());
 	
 	public static void register(RegistryEvent.Register<Enchantment> event)
 	{

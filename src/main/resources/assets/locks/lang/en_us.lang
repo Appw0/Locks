@@ -28,6 +28,8 @@ enchantment.locks.sturdy=Sturdy
 enchantment.locks.sturdy.desc=Reduces the strength of lock picks
 enchantment.locks.complexity=Complexity
 enchantment.locks.complexity.desc=Makes the lock too complex to pick with lower tier lock picks
+enchantment.locks.disappearing=Disappearing
+enchantment.locks.disappearing.desc=Makes the lock cosmetically invisible
 
 # Death Mesages
 death.attack.locks.shock=%1$s was electrocuted after failing to pick an enchanted lock

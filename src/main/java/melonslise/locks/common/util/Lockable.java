@@ -8,14 +8,15 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import melonslise.locks.common.init.LocksCapabilities;
+import melonslise.locks.common.init.LocksEnchantments;
 import melonslise.locks.common.item.LockItem;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.culling.ClippingHelper;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumFacing.Axis;
@@ -39,23 +40,25 @@ public class Lockable extends Observable implements Observer
 		public final Vec3d pos;
 		public final Orientation orient;
 		public final AxisAlignedBB bb;
+		public final boolean lockVisible;
 
-		public State(Vec3d pos, Orientation orient)
+		public State(Vec3d pos, Orientation orient, boolean lockVisible)
 		{
-			this(pos, orient, (orient.face == AttachFace.WALL ? orient.dir.getAxis() == Axis.Z ? VERT_Z_BB : VERT_X_BB : orient.dir.getAxis() == Axis.Z ? HOR_Z_BB : HOR_X_BB).offset(pos));
+			this(pos, orient, (orient.face == AttachFace.WALL ? orient.dir.getAxis() == Axis.Z ? VERT_Z_BB : VERT_X_BB : orient.dir.getAxis() == Axis.Z ? HOR_Z_BB : HOR_X_BB).offset(pos), lockVisible);
 		}
 
-		public State(Vec3d pos, Orientation orient, AxisAlignedBB bounds)
+		public State(Vec3d pos, Orientation orient, AxisAlignedBB bounds, boolean lockVisible)
 		{
 			this.pos = pos;
 			this.orient = orient;
 			this.bb = bounds;
+			this.lockVisible = lockVisible;
 		}
 
 		@SideOnly(Side.CLIENT)
 		public boolean inView(ClippingHelper clippingHelper, Vec3d origin)
 		{
-			return clippingHelper.isBoxInFrustum(this.bb.minX - origin.x, this.bb.minY - origin.y, this.bb.minZ - origin.z, this.bb.maxX - origin.x, this.bb.maxY - origin.y, this.bb.maxZ - origin.z);
+			return lockVisible && clippingHelper.isBoxInFrustum(this.bb.minX - origin.x, this.bb.minY - origin.y, this.bb.minZ - origin.z, this.bb.maxX - origin.x, this.bb.maxY - origin.y, this.bb.maxZ - origin.z);
 		}
 
 		@SideOnly(Side.CLIENT)
@@ -73,6 +76,7 @@ public class Lockable extends Observable implements Observer
 	public final Orientation orient;
 	public final int networkID;
 	public final ItemStack stack;
+	public final boolean lockVisible;
 
 	public Map<List<IBlockState>, State> cache = new HashMap<>();
 
@@ -93,7 +97,7 @@ public class Lockable extends Observable implements Observer
 		this.orient = orient;
 		this.stack = stack;
 		this.networkID = networkID;
-		
+		this.lockVisible = EnchantmentHelper.getEnchantmentLevel(LocksEnchantments.DISAPPEARING, this.stack) == 0;
 	}
 
 	@Override
@@ -166,7 +170,7 @@ public class Lockable extends Observable implements Observer
 				min = dist;
 				side = side1;
 			}
-		state = new State(point, Orientation.fromDirection(side, this.orient.dir));
+		state = new State(point, Orientation.fromDirection(side, this.orient.dir), this.lockVisible);
 		this.cache.put(states, state);
 		return state;
 	}

@@ -36,6 +36,7 @@ public class LockPickingContainer extends Container
 	protected int currentIndex = 0;
 	
 	public int shocking, sturdy, complexity;
+	public boolean lockVisible;
 	
 	public LockPickingContainer(EntityPlayer player, EnumHand hand, Lockable lockable)
 	{
@@ -51,6 +52,7 @@ public class LockPickingContainer extends Container
 		this.shocking = EnchantmentHelper.getEnchantmentLevel(LocksEnchantments.SHOCKING, this.lockable.stack);
 		this.sturdy = EnchantmentHelper.getEnchantmentLevel(LocksEnchantments.STURDY, this.lockable.stack);
 		this.complexity = EnchantmentHelper.getEnchantmentLevel(LocksEnchantments.COMPLEXITY, this.lockable.stack);
+		this.lockVisible = lockable.lockVisible;
 	}
 
 	public int getCurrentIndex()

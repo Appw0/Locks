@@ -84,13 +84,24 @@ public class LockingItemCloningRecipe extends IForgeRegistryEntry.Impl<IRecipe> 
 	public ItemStack getCraftingResult(InventoryCrafting inventory)
 	{
 		ItemStack locking = ItemStack.EMPTY;
-		for(int a = 0; a < inventory.getSizeInventory() && locking.isEmpty(); ++a)
+		ArrayList<ItemStack> blanks = Lists.newArrayList();
+		for(int a = 0; a < inventory.getSizeInventory(); ++a)
 		{
 			ItemStack stack = inventory.getStackInSlot(a);
-			if(!stack.isEmpty() && LocksUtil.hasKey(stack, LockingItem.KEY_ID) && this.locking.test(stack))
+			if (stack.isEmpty()) {
+				continue;
+			} else if (locking.isEmpty() && LocksUtil.hasKey(stack, LockingItem.KEY_ID) && this.locking.test(stack)) {
 				locking = stack;
+			} else {
+				blanks.add(stack);
+			}
 		}
-		return LockingItem.copyId(locking, this.result.copy());
+
+		if (blanks.size() == 1 && this.result.getItem().equals(blanks.get(0).getItem())) {
+			return LockingItem.copyId(locking, blanks.get(0).copy());
+		} else {
+			return LockingItem.copyId(locking, this.result.copy());
+		}
 	}
 
 	@Override
